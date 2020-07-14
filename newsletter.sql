@@ -195,6 +195,7 @@ DROP TABLE IF EXISTS `newsletter_trigger`;
 CREATE TABLE `newsletter_trigger` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `newsletterId` bigint(20) NOT NULL,
+  `editionId` bigint(20) DEFAULT NULL,
   `subscriberId` bigint(20) NOT NULL,
   `sent` tinyint(1) NOT NULL DEFAULT '1',
   `delivered` tinyint(1) NOT NULL DEFAULT '1',
@@ -206,6 +207,8 @@ CREATE TABLE `newsletter_trigger` (
   PRIMARY KEY (`id`),
   KEY `idx_trigger_newsletter` (`newsletterId`),
   KEY `idx_trigger_subscriber` (`subscriberId`),
+  KEY `idx_trigger_edition` (`editionId`),
+  CONSTRAINT `fk_trigger_edition` FOREIGN KEY (`editionId`) REFERENCES `edition` (`id`),
   CONSTRAINT `fk_trigger_newsletter` FOREIGN KEY (`newsletterId`) REFERENCES `newsletter` (`id`),
   CONSTRAINT `fk_trigger_subscriber` FOREIGN KEY (`subscriberId`) REFERENCES `subscriber` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -300,4 +303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-11 21:36:03
+-- Dump completed on 2020-07-14 18:54:42
